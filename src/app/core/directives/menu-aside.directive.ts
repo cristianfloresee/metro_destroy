@@ -25,6 +25,7 @@ export class MenuAsideDirective implements AfterViewInit, OnDestroy {
 		this.layoutConfigService.onLayoutConfigUpdated$
 			.pipe(
 				mergeMap(config => {
+					console.log("conifg directive: ", config)
 					this.config = config;
 					return this.layoutRefService.layoutRefs$;
 				})

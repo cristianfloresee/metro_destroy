@@ -7,7 +7,6 @@ import { filter } from 'rxjs/operators';
 //DIRECTIVA
 import { MenuAsideOffcanvasDirective } from '../../../core/directives/menu-aside-offcanvas.directive';
 // SERVICIOS
-import { LayoutConfigService } from '../../../core/services/layout-config.service';
 import { LayoutRefService } from '../../../core/services/layout/layout-ref.service';
 import { MenuAsideService } from '../../../core/services/layout/menu-aside.service';
 
@@ -27,7 +26,6 @@ export class AsideLeftComponent implements OnInit, AfterViewInit {
 	constructor(
 		private el: ElementRef,
 		public menuAsideService: MenuAsideService,
-		public layoutConfigService: LayoutConfigService,
 		private router: Router,
 		private layoutRefService: LayoutRefService,
 		@Inject(DOCUMENT) private document: Document

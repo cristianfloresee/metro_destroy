@@ -10,12 +10,8 @@ import {
 	ChangeDetectionStrategy
 } from '@angular/core';
 import { AnimationBuilder, AnimationPlayer, style, animate } from '@angular/animations';
-// SERVICIOS
-import { LayoutConfigService } from '../../core/services/layout-config.service';
-import { LayoutRefService } from '../../core/services/layout/layout-ref.service';
-// RXJS
-import { BehaviorSubject } from 'rxjs';
 
+import { LayoutRefService } from '../../core/services/layout/layout-ref.service';
 
 @Component({
 	selector: 'm-pages',
@@ -29,25 +25,17 @@ export class PagesComponent implements OnInit, AfterViewInit {
 
 	public player: AnimationPlayer;
 
-	// class for the header container
-	pageBodyClass$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
 	@ViewChild('mContentWrapper') contenWrapper: ElementRef;
 	@ViewChild('mContent') mContent: ElementRef;
 
 	constructor(
 		private el: ElementRef,
-		private configService: LayoutConfigService,
 		private router: Router,
 		private layoutRefService: LayoutRefService,
 		private animationBuilder: AnimationBuilder,
 
 	) {
-
-		//SELFLAYOUT SIEMPRE FLUID!
-		this.configService.onLayoutConfigUpdated$.subscribe(model => {
-			let pageBodyClass = '';
-		});
 
 		// animate page load
 		this.router.events.subscribe(event => {

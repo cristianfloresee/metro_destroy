@@ -3,7 +3,8 @@ import {
 	OnInit,
 	Input,
 	HostBinding,
-	OnDestroy
+	OnDestroy,
+	ElementRef
 } from '@angular/core';
 import { LayoutConfigService } from '../../../core/services/layout-config.service';
 import { LayoutConfig } from '../../../config/layout';
@@ -24,19 +25,15 @@ export class AuthComponent implements OnInit, OnDestroy {
 	constructor(
 		private layoutConfigService: LayoutConfigService,
 		public authNoticeService: AuthNoticeService,
-	) {}
+		private el: ElementRef
+	) { }
 
 	ngOnInit(): void {
-		// set login layout to blank
-
-		//DEJA EL CONFIG DEL SERVICIO CON ESTA CONF content_ {skin: ''}
-		this.layoutConfigService.setModel(new LayoutConfig({ content: { skin: '' } }));
-
+		this.el.nativeElement.parentElement.className = 'm-content--skin-light m-header--static';
 	}
 
 	ngOnDestroy(): void {
-		// RESETA LA CONFIGURACIÓN CON LA CONF POR DEFECTO CUANDO PASA EL LOGIN
-		this.layoutConfigService.setModel(new LayoutConfig());
+		this.el.nativeElement.parentElement.className = 'm-page--fluid m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default m-scroll-top--shown';
 	}
 
 	register() {

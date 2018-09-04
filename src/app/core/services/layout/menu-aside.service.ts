@@ -2,7 +2,9 @@ import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { MenuConfigService } from '../menu-config.service';
 import * as objectPath from 'object-path';
-import { LayoutConfigService } from '../layout-config.service';
+
+
+import { LayoutConfigService } from '../layout-config.service'; //ESTA QUIERO BORRAR
 
 @Injectable()
 export class MenuAsideService {

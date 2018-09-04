@@ -38,11 +38,9 @@ import { LayoutConfigService } from './core/services/layout-config.service';
 import { MenuConfigService } from './core/services/menu-config.service';
 import { PageConfigService } from './core/services/page-config.service';
 import { UtilsService } from './core/services/utils.service';
-import { ClassInitService } from './core/services/class-init.service';
 import { LogsService } from './core/services/logs.service';
 import { QuickSearchService } from './core/services/quick-search.service';
 import { SubheaderService } from './core/services/layout/subheader.service';
-import { HeaderService } from './core/services/layout/header.service';
 import { MenuHorizontalService } from './core/services/layout/menu-horizontal.service';
 import { MenuAsideService } from './core/services/layout/menu-aside.service';
 import { LayoutRefService } from './core/services/layout/layout-ref.service';
@@ -82,7 +80,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		MenuConfigService,
 		PageConfigService,
 		UtilsService,
-		ClassInitService,
 		MessengerService,
 		ClipboardService,
 		LogsService,
@@ -96,7 +93,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 		// template services
 		SubheaderService,
-		HeaderService,
 		MenuHorizontalService,
 		MenuAsideService,
 		{

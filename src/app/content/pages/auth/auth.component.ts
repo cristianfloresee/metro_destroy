@@ -6,14 +6,11 @@ import {
 	OnDestroy,
 	ElementRef
 } from '@angular/core';
-import { LayoutConfigService } from '../../../core/services/layout-config.service';
-import { LayoutConfig } from '../../../config/layout';
 import { AuthNoticeService } from '../../../core/auth/auth-notice.service';
 
 @Component({
 	selector: 'm-auth',
-	templateUrl: './auth.component.html',
-	styleUrls: ['./auth.component.scss']
+	templateUrl: './auth.component.html'
 })
 export class AuthComponent implements OnInit, OnDestroy {
 	@HostBinding('id') id = 'm_login';
@@ -23,7 +20,6 @@ export class AuthComponent implements OnInit, OnDestroy {
 	today: number = Date.now();
 
 	constructor(
-		private layoutConfigService: LayoutConfigService,
 		public authNoticeService: AuthNoticeService,
 		private el: ElementRef
 	) { }

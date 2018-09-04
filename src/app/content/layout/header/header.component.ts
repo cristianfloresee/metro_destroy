@@ -1,5 +1,5 @@
 // ANGULAR IMPORTS
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
 import {
 	NavigationCancel,
 	NavigationEnd,
@@ -10,7 +10,6 @@ import {
 } from '@angular/router';
 
 // SERVICIOS
-import { HeaderService } from '../../../core/services/layout/header.service';
 import { LayoutRefService } from '../../../core/services/layout/layout-ref.service';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 
@@ -20,14 +19,13 @@ import { LoadingBarService } from '@ngx-loading-bar/core';
 	styleUrls: ['./header.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent implements OnInit, AfterViewInit {
+export class HeaderComponent implements AfterViewInit {
 
 	@ViewChild('mHeader') mHeader: ElementRef;
 
 	constructor(
 		private router: Router,
 		private layoutRefService: LayoutRefService,
-		public headerService: HeaderService,
 		public loader: LoadingBarService
 	) {
 		//PROGRESSBAR DE LA PÁGINA
@@ -49,8 +47,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 		});
 	}
 
-	ngOnInit(): void {
-	}
 
 	ngAfterViewInit(): void {
 		// keep header element in the service

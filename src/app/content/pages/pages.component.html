@@ -1,0 +1,31 @@
+<!-- begin:: Page -->
+<ng-container>
+	<m-header></m-header>
+
+	<!-- begin::Body -->
+	<div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+		<!-- BEGIN:: Aside Left -->
+		<button class="m-aside-left-close m-aside-left-close--skin-dark" id="m_aside_left_close_btn">
+			<i class="la la-close"></i>
+		</button>
+		<ng-container>
+			<m-aside-left id="m_aside_left" class="m-grid__item m-aside-left m-aside-left--skin-dark"></m-aside-left>
+		</ng-container>
+		<!-- END:: Aside Left -->
+
+		<div #mContentWrapper class="m-grid__item m-grid__item--fluid m-wrapper">
+			<m-subheader></m-subheader>
+			<div class="m-content" #mContent>
+				<router-outlet></router-outlet>
+			</div>
+		</div>
+	</div>
+	<!-- end:: Body -->
+
+	<m-footer class="m-grid__item m-footer"></m-footer>
+	<m-quick-sidebar></m-quick-sidebar>
+	<m-tooltips></m-tooltips>
+	<m-scroll-top></m-scroll-top>
+</ng-container>
+
+

@@ -1,8 +1,6 @@
 import {
 	Component,
 	OnInit,
-	HostBinding,
-	HostListener,
 	Input,
 	ChangeDetectionStrategy
 } from '@angular/core';
@@ -14,18 +12,13 @@ import {
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NotificationComponent implements OnInit {
-	@HostBinding('class')
-	// tslint:disable-next-line:max-line-length
-	classes = 'm-nav__item m-topbar__notifications m-topbar__notifications--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-center 	m-dropdown--mobile-full-width';
-
-	@HostBinding('attr.m-dropdown-toggle') attrDropdownToggle = 'click';
-	@HostBinding('attr.m-dropdown-persistent') attrDropdownPersisten = 'true';
 
 	@Input() animateShake: any;
 	@Input() animateBlink: any;
 
 	constructor() {
-		// animate icon shake and dot blink
+		//ANIMACIÓN DE SACUDIDA PARA EL ICONO Y PARPADEO DE LA NOTIFICACIÓN
+		//ESTO SE PUEDE HACER DIRECTAMENTE EN CSS
 		setInterval(() => {
 			this.animateShake = 'm-animate-shake';
 			this.animateBlink = 'm-animate-blink';

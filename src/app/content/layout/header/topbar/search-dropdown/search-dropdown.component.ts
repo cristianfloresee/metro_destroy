@@ -19,10 +19,6 @@ import { QuickSearchService } from '../../../../../core/services/quick-search.se
 export class SearchDropdownComponent
 	implements OnInit, OnDestroy, AfterViewInit {
 	onSearch: Subscription;
-	@HostBinding('attr.m-dropdown-toggle') attrDropdownToggle = 'click';
-	@HostBinding('attr.m-dropdown-persistent') attrDropdownPersistent = '1';
-	@HostBinding('attr.m-quicksearch-mode') attrQuicksearchMode = 'dropdown';
-
 
 	/**
 	 * Hack way to call directive programatically for the host
@@ -30,8 +26,7 @@ export class SearchDropdownComponent
 	 * The official feature support is still pending
 	 * https://github.com/angular/angular/issues/8785
 	 */
-	@HostBinding('attr.mQuickSearch')
-	mQuickSearchDirective: QuickSearchDirective;
+	@HostBinding('attr.mQuickSearch') mQuickSearchDirective: QuickSearchDirective;
 
 	constructor(
 		private el: ElementRef,

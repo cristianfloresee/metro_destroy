@@ -1,7 +1,5 @@
 import {
 	Directive,
-	AfterViewInit,
-	OnDestroy,
 	ElementRef
 } from '@angular/core';
 import { LayoutConfigService } from '../services/layout-config.service';
@@ -12,7 +10,7 @@ import { mergeMap } from 'rxjs/operators';
 @Directive({
 	selector: '[mMenuAside]'
 })
-export class MenuAsideDirective implements AfterViewInit, OnDestroy {
+export class MenuAsideDirective  {
 	menu: any;
 	config: any;
 	layout: any;
@@ -22,6 +20,9 @@ export class MenuAsideDirective implements AfterViewInit, OnDestroy {
 		private layoutConfigService: LayoutConfigService,
 		private layoutRefService: LayoutRefService
 	) {
+
+
+		//VER ESTA MIERDA... TIENE LAS REFERENCIAS DEL HEADER EN EL LAYOUT E INICIA EL SIDEMENU...
 		this.layoutConfigService.onLayoutConfigUpdated$
 			.pipe(
 				mergeMap(config => {
@@ -35,6 +36,7 @@ export class MenuAsideDirective implements AfterViewInit, OnDestroy {
 				console.log("layout directive: ", layout)
 				this.initMenu();
 			});
+			this.initMenu();
 	}
 
 	initMenu(): any {
@@ -88,8 +90,4 @@ export class MenuAsideDirective implements AfterViewInit, OnDestroy {
 			this.menu = new mMenu(this.el.nativeElement, options);
 		}
 	}
-
-	ngAfterViewInit(): void {}
-
-	ngOnDestroy(): void {}
 }

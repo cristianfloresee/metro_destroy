@@ -1,3 +1,6 @@
+// ESTE SERVICIO PERMITE CAMBIAR EL MENU LATERAL Y EL HEADER...
+
+
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { MenuConfig } from '../../config/menu';
@@ -10,7 +13,9 @@ export class MenuConfigService {
 	);
 	menuHasChanged: any = false;
 
-	constructor() { }
+	constructor() {
+		console.log("MI MENU: ", this.configModel);
+	}
 
 
 	setModel(menuModel: MenuConfig) {

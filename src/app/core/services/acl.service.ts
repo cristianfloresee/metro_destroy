@@ -1,50 +1,58 @@
-import { AclModel } from '../models/acl';
+// ANGULAR IMPORTS
 import { Injectable } from '@angular/core';
-import { ConfigData } from '../interfaces/config-data';
+// MODELOS
+import { AclModel } from '../models/acl';
+// NGX-PERMISSIONS: LIBRERÍA EXTERNA
 import { NgxRolesService, NgxPermissionsService } from 'ngx-permissions';
-import { from, BehaviorSubject, Subject } from 'rxjs';
-import { mergeMap, filter } from 'rxjs/operators';
+// RXJS
+import { BehaviorSubject } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+// SERVICIOS
 import { AuthenticationService } from '../auth/authentication.service';
 
 @Injectable()
-export class AclService implements ConfigData {
-	public aclModel: AclModel;
-	public onAclUpdated$: BehaviorSubject<AclModel>;
+export class AclService {
+	public aclModel: AclModel; //VARIABLES GLOBALES DE PERMISOS QUE EXISTEN Y ROLES ACTUALES (NO TIENE NADA AÚN)
+	public onAclUpdated$: BehaviorSubject<AclModel>; //VARIABLE OBSERVABLE DE
 
 	constructor(
 		private roleService: NgxRolesService,
 		private permService: NgxPermissionsService,
 		private authService: AuthenticationService,
 	) {
-		// set initial permission model
+		// SETEO INICIAL DEL MODELO DE PERMISOS
 		this.aclModel = new AclModel();
 		this.onAclUpdated$ = new BehaviorSubject(this.aclModel);
 
+
+		//***************SERVICIOS DEL AUTH SERVICE */
 		this.authService.getUserRoles().subscribe(roles => {
 			this.setCurrrentUserRoles(roles);
 		});
 
-		// subscribe to credential changed, eg. after login response
+		//SUSCRIBIRSE A LA CREDENCIAL CAMBIADA (EJEMPLO: DESPUÉS DE LA RESPUESTA DE LOGIN)
 		this.authService.onCredentialUpdated$
 			.pipe(mergeMap(accessData => this.authService.getUserRoles()))
 			.subscribe(roles => this.setCurrrentUserRoles(roles));
+
+
 
 		// subscribe to acl data observable
 		this.onAclUpdated$.subscribe(acl => {
 			const permissions = Object.keys(acl.permissions).map((key) => {
 				return acl.permissions[key];
 			});
-			// load default permission list
+			// CARGA LA LISTA DE PERMISOS POR DEFECTO
 			this.permService.loadPermissions(permissions, (permissionName, permissionStore) => !!permissionStore[permissionName]);
 
-			// merge current user roles
+			//MERGE DE ROLES DE USUARIO ACTUALES
 			const roles = Object.assign({}, this.aclModel.currentUserRoles, {
-				// default user role is GUEST
+				// ROL DE USUARIO POR DEFECTO ES GUEST
 				GUEST: () => {
 					// return this.authService.isAuthorized().toPromise();
 				}
 			});
-			// add to role service
+			//AGREGAR AL SERVICIO DE ROLES
 			this.roleService.addRoles(roles);
 		});
 	}
@@ -59,13 +67,13 @@ export class AclService implements ConfigData {
 	}
 
 	setCurrrentUserRoles(roles: any): any {
-		// update roles if the credential data has roles
+		//ACTUALIZAR ROLES SI LOS DATOS DE CREDENCIAL TIENEN ROLES
 		if (roles != null) {
 			this.aclModel.currentUserRoles = {};
 			roles.forEach(role => {
 				this.aclModel.currentUserRoles[role] = this.aclModel.permissions[role];
 			});
-			// set updated acl model back to service
+			// RESTABLECER EL MODELO ACL ACTUALIZADO AL SERVICIO
 			this.setModel(this.aclModel);
 		}
 	}

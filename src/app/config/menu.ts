@@ -12,7 +12,6 @@ export class MenuConfig {
 						root: true,
 						icon: 'flaticon-add',
 						toggle: 'click',
-						translate: 'Actions',
 						submenu: {
 							type: 'classic',
 							alignment: 'left',
@@ -21,42 +20,7 @@ export class MenuConfig {
 									title: 'Create New Post',
 									page: '/header/actions',
 									icon: 'flaticon-file',
-									translate: 'Create New Post',
-									aside: {
-										self: {
-											bullet: 'dot'
-										},
-										items: [
-											{
-												section: 'Departments'
-											},
-											{
-												title: 'Resources',
-												desc: '',
-												icon: 'flaticon-layers',
-												bullet: 'dot',
-												root: true,
-												submenu: [
-													{
-														title: 'Create New Post',
-														page: '/header/actions',
-													},
-													{
-														title: 'Timesheet',
-														tooltip: 'Non functional dummy link',
-													},
-													{
-														title: 'Payroll',
-														tooltip: 'Non functional dummy link',
-													},
-													{
-														title: 'Contacts',
-														tooltip: 'Non functional dummy link',
-													}
-												]
-											}
-										]
-									}
+
 								},
 								{
 									title: 'Generate Reports',
@@ -158,7 +122,6 @@ export class MenuConfig {
 						root: true,
 						icon: 'flaticon-line-graph',
 						toggle: 'click',
-						translate: 'Reports',
 						submenu: {
 							type: 'mega',
 							width: '1000px',
@@ -323,11 +286,9 @@ export class MenuConfig {
 						root: true,
 						icon: 'flaticon-paper-plane',
 						toggle: 'click',
-						translate: 'Apps',
 						badge: {
 							type: 'm-badge--brand m-badge--wide',
 							value: 'new',
-							translate: 'new',
 						},
 						submenu: {
 							type: 'classic',
@@ -459,7 +420,6 @@ export class MenuConfig {
 						icon: 'flaticon-line-graph',
 						page: '/',
 						badge: {type: 'm-badge--danger', value: '2'},
-						translate: 'Dashboard'
 					},
 					{section: 'Components'},
 					{

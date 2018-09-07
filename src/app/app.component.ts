@@ -1,21 +1,18 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef,  ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef,  ViewChild, OnInit } from '@angular/core';
 import { SplashScreenService } from './core/services/splash-screen.service';
-import { AclService } from './core/services/acl.service';
-
-// LIST KNOWN ISSUES
-// [Violation] Added non-passive event listener; https://github.com/angular/angular/issues/8866
+import { AclService } from './core/services/acl.service'; //SERVICIO DE AUTENTICACIÓN
 
 @Component({
-	// tslint:disable-next-line:component-selector
 	selector: 'body[m-root]',
 	templateUrl: './app.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements AfterViewInit, OnInit {
 	title = 'Metronic';
 
-	@ViewChild('splashScreen', {read: ElementRef})
-	splashScreen: ElementRef;
+	@ViewChild('splashScreen') splashScreen: ElementRef; //REFERENCIA
+
+
 	splashScreenImage: string;
 
 	constructor(
@@ -23,6 +20,9 @@ export class AppComponent implements AfterViewInit {
 		private aclService: AclService
 	) {}
 
+	ngOnInit(){
+	}
+	//CUANDO SE HA INICIALIZADO POR COMPLETO EL APP.COMPONENT
 	ngAfterViewInit(): void {
 		if (this.splashScreen) {
 			this.splashScreenService.init(this.splashScreen.nativeElement);

@@ -1,19 +1,16 @@
-export interface AclInterface {
-	permissions: any;
-	currentUserRoles: any;
-}
+//LISTA DE CONTROL DE ACCESO
 
-export class AclModel implements AclInterface {
+export class AclModel {
 	public config: any;
 
-	// default permissions
+	// PERMISOS PREDETERMINADOS
 	public permissions: any = {
 		ADMIN: ['canDoAnything'],
 		USER: ['canDoLimitedThings']
 	};
 
-	// store an object of current user roles
+	// ALMACENAR UN OBJETO DE ROLES ACTUALES
 	public currentUserRoles: any = {};
 
-	constructor() {}
+	constructor() { }
 }

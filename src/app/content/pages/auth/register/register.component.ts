@@ -4,7 +4,6 @@ import {
 	Input,
 	Output,
 	ViewChild,
-	ElementRef
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { AuthenticationService } from '../../../../core/auth/authentication.service';

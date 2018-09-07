@@ -4,8 +4,8 @@ import { Observable, of } from 'rxjs';
 @Injectable()
 export class TokenStorage {
 	/**
-	 * Get access token
-	 * @returns {Observable<string>}
+	 * Obtener token de acceso.
+	 * @returns Observable<string>
 	 */
 	public getAccessToken(): Observable<string> {
 		const token: string = <string>localStorage.getItem('accessToken');
@@ -13,8 +13,8 @@ export class TokenStorage {
 	}
 
 	/**
-	 * Get refresh token
-	 * @returns {Observable<string>}
+	 * Obtener refresh token.
+	 * @returns Observable<string>
 	 */
 	public getRefreshToken(): Observable<string> {
 		const token: string = <string>localStorage.getItem('refreshToken');
@@ -22,8 +22,8 @@ export class TokenStorage {
 	}
 
 	/**
-	 * Get user roles in JSON string
-	 * @returns {Observable<any>}
+	 * Obtener roles de usuario en un JSON string.
+	 * @returns Observable<any>
 	 */
 	public getUserRoles(): Observable<any> {
 		const roles: any = localStorage.getItem('userRoles');
@@ -33,8 +33,8 @@ export class TokenStorage {
 	}
 
 	/**
-	 * Set access token
-	 * @returns {TokenStorage}
+	 * Establecer token de acceso.
+	 * @returns TokenStorage
 	 */
 	public setAccessToken(token: string): TokenStorage {
 		localStorage.setItem('accessToken', token);
@@ -43,8 +43,8 @@ export class TokenStorage {
 	}
 
 	/**
-	 * Set refresh token
-	 * @returns {TokenStorage}
+	 * Establecer token de actualización.
+	 * @returns TokenStorage
 	 */
 	public setRefreshToken(token: string): TokenStorage {
 		localStorage.setItem('refreshToken', token);
@@ -53,9 +53,9 @@ export class TokenStorage {
 	}
 
 	/**
-	 * Set user roles
+	 * Establecer roles de usuario
 	 * @param roles
-	 * @returns {TokenStorage}
+	 * @returns TokenStorage
 	 */
 	public setUserRoles(roles: any): any {
 		if (roles != null) {
@@ -66,7 +66,7 @@ export class TokenStorage {
 	}
 
 	/**
-	 * Remove tokens
+	 * Eliminar Tokens.
 	 */
 	public clear() {
 		localStorage.removeItem('accessToken');

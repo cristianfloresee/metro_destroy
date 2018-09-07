@@ -9,8 +9,12 @@ export class LayoutRefService {
 	constructor() {}
 
 	addElement(name, element) {
-		const obj = {};
-		obj[name] = element;
-		this.layoutRefs$.next(Object.assign(this.layoutRefs, obj));
+		//name: header
+		//element: href del header
+		//const obj = {};
+		//obj[name] = element;
+		//console.log("REFERENCIAS A COMPONENTES[HEADER, ASIDE, CONTENT] ", Object.assign(this.layoutRefs, obj)); //{asideleft: content: header:}
+
+		//this.layoutRefs$.next(Object.assign(this.layoutRefs, obj)); //EMITE UN EVENTO PARA QUE ESCUCHEN A LAYOUTREF$
 	}
 }

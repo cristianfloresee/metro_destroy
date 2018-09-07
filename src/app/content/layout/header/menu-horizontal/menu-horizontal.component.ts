@@ -1,11 +1,11 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostBinding, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
 import * as objectPath from 'object-path';
+
+//DIRECTIVAS
 import { MenuHorizontalOffcanvasDirective } from '../../../../core/directives/menu-horizontal-offcanvas.directive';
 import { MenuHorizontalDirective } from '../../../../core/directives/menu-horizontal.directive';
 import { MenuHorizontalService } from '../../../../core/services/layout/menu-horizontal.service';
-import { MenuConfigService } from '../../../../core/services/menu-config.service';
 
 @Component({
 	selector: 'm-menu-horizontal',
@@ -13,85 +13,42 @@ import { MenuConfigService } from '../../../../core/services/menu-config.service
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MenuHorizontalComponent implements OnInit, AfterViewInit {
-	@HostBinding('class') classes = '';
-	@HostBinding('id') id = 'm_header_menu';
 
-	@HostBinding('attr.mMenuHorizontalOffcanvas')
-	mMenuHorOffcanvas: MenuHorizontalOffcanvasDirective;
-	@HostBinding('attr.mMenuHorizontal')
-	mMenuHorizontal: MenuHorizontalDirective;
+	//ESTA MIERDA!!!
+	@HostBinding('attr.mMenuHorizontalOffcanvas') mMenuHorOffcanvas: MenuHorizontalOffcanvasDirective;
+	@HostBinding('attr.mMenuHorizontal') mMenuHorizontal: MenuHorizontalDirective;
 
 	currentRouteUrl: any = '';
-	activeItem: any;
-	itemsWithAsides = [];
 
 	constructor(
 		private el: ElementRef,
-		public menuHorService: MenuHorizontalService,
-		private menuConfigService: MenuConfigService,
+		public menuHorService: MenuHorizontalService, //ESTA MIERDA!!!
 		private router: Router,
 	) {
-		this.classes = this.menuHorService.menuClasses;
-	}
-
-	ngAfterViewInit(): void {
-		Promise.resolve(null).then(() => {
-			this.mMenuHorOffcanvas = new MenuHorizontalOffcanvasDirective(this.el);
-			this.mMenuHorOffcanvas.ngAfterViewInit();
-
-			this.mMenuHorizontal = new MenuHorizontalDirective(this.el);
-			this.mMenuHorizontal.ngAfterViewInit();
-		});
+		//m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas m-header-menu--skin-dark m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-dark m-aside-header-menu-mobile--submenu-skin-dark
+		//m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas m-header-menu--skin-dark m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-dark m-aside-header-menu-mobile--submenu-skin-dark
+		//m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas m-header-menu--skin-dark m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-dark m-aside-header-menu-mobile--submenu-skin-dark
 	}
 
 	ngOnInit(): void {
 		this.currentRouteUrl = this.router.url;
-		this.menuHorService.menuList$.subscribe(menuItems => this.fillAsides(menuItems));
+	}
 
-		this.shouldOverrideAsides();
+	ngAfterViewInit(): void {
+		Promise.resolve(null)
+			.then(() => {
+				this.mMenuHorOffcanvas = new MenuHorizontalOffcanvasDirective(this.el);
+				this.mMenuHorOffcanvas.ngAfterViewInit();
 
-		this.router.events
-			.pipe(filter(event => event instanceof NavigationEnd))
-			.subscribe(event => {
-				this.currentRouteUrl = this.router.url;
-				this.shouldOverrideAsides();
+				this.mMenuHorizontal = new MenuHorizontalDirective(this.el);
+				this.mMenuHorizontal.ngAfterViewInit();
 			});
 	}
-
-	shouldOverrideAsides() {
-		const aside = this.getActiveItemAside();
-		if (aside) {
-			// override aside menu as secondary menu of current header menu
-			this.menuConfigService.configModel.config.aside = aside;
-			this.menuConfigService.setModel(this.menuConfigService.configModel);
-		}
-	}
-
-	fillAsides(menuItems) {
-		for (const menuItem of menuItems) {
-			if (menuItem.aside) {
-				this.itemsWithAsides.push(menuItem);
-			}
-
-			if (menuItem.submenu && menuItem.submenu.items) {
-				this.fillAsides(menuItem.submenu.items);
-			}
-		}
-	}
-
-	getActiveItemAside() {
-		if (this.currentRouteUrl === '') {
-			return null;
-		}
-
-		for (const item of this.itemsWithAsides) {
-			if (item.page && item.page === this.currentRouteUrl) {
-				return item.aside;
-			}
-		}
-	}
-
+	//m-menu__item m-menu__item--submenu m-menu__item--rel ng-star-inserted m-menu__item--open-dropdown m-menu__item--active m-menu__item--hover
+	//m-menu__item m-menu__item--submenu m-menu__item--rel ng-star-inserted m-menu__item--open-dropdown
+	//m-menu__item m-menu__item--submenu m-menu__item--rel ng-star-inserted m-menu__item--open-dropdown
 	getItemCssClasses(item) {
+		//console.log("getItemCssClasses: ", item);
 		let cssClasses = 'm-menu__item';
 
 		if (objectPath.get(item, 'submenu')) {

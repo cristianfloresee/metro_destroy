@@ -1,15 +1,24 @@
-import { BehaviorSubject, Observable, Subject, from, throwError } from 'rxjs';
-import { map, catchError, tap, switchMap } from 'rxjs/operators';
-
+// ANGULAR IMPORTS
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { AuthService } from 'ngx-auth';
-
+// RXJS
+import { Observable, Subject, from, throwError } from 'rxjs';
+import { map, catchError, tap, switchMap } from 'rxjs/operators';
+// OTROS SERVICIOS DE AUTENTICACIÓN
 import { TokenStorage } from './token-storage.service';
 import { UtilsService } from '../services/utils.service';
+// MODELOS DE AUTENTICACIÓN
 import { AccessData } from './access-data';
 import { Credential } from './credential';
+// NGX-AUTH: LIBRERÍA EXTERNA
+import { AuthService } from 'ngx-auth';
 
+
+/**
+ * Los módulos de autenticación proporcionan la capacidad de adjuntar token de autenticación automáticamente a los
+ * encabezados (a través de interceptores http), actualizar la funcionalidad de token, proteger las páginas protegidas
+ * o públicas y más.
+ */
 @Injectable()
 export class AuthenticationService implements AuthService {
 	API_URL = 'api';
@@ -28,37 +37,37 @@ export class AuthenticationService implements AuthService {
 	}
 
 	/**
-	 * Check, if user already authorized.
-	 * @description Should return Observable with true or false values
-	 * @returns {Observable<boolean>}
+	 * Verifica, si el usuario ya está autorizado.
+	 * @description Debería regresar Observable con valores verdaderos o falsos.
+	 * @returns Observable<boolean>
 	 * @memberOf AuthService
 	 */
 	public isAuthorized(): Observable<boolean> {
 		return this.tokenStorage.getAccessToken().pipe(map(token => !!token));
 	}
 
+
 	/**
-	 * Get access token
-	 * @description Should return access token in Observable from e.g. localStorage
-	 * @returns {Observable<string>}
+	 * Obtiene acceso al token
+	 * @description Debería devolver el token de acceso en Observable de, por ejemplo, el localstorage.
+	 * @returns Observable<string>
 	 */
 	public getAccessToken(): Observable<string> {
 		return this.tokenStorage.getAccessToken();
 	}
 
 	/**
-	 * Get user roles
-	 * @returns {Observable<any>}
+	 * Obtener roles de usuario
+	 * @returns Observable<any>
 	 */
 	public getUserRoles(): Observable<any> {
 		return this.tokenStorage.getUserRoles();
 	}
 
 	/**
-	 * Function, that should perform refresh token verifyTokenRequest
-	 * @description Should be successfully completed so interceptor
-	 * can execute pending requests or retry original one
-	 * @returns {Observable<any>}
+	 * Actualiza el token verifyTokenRequest
+	 * @description Debe completarse con éxito para que el interceptor pueda ejecutar solicitudes pendientes o reintentar el original.
+	 * @returns Observable<AccessData>
 	 */
 	public refreshToken(): Observable<AccessData> {
 		return this.tokenStorage.getRefreshToken().pipe(
@@ -74,33 +83,31 @@ export class AuthenticationService implements AuthService {
 	}
 
 	/**
-	 * Function, checks response of failed request to determine,
-	 * whether token be refreshed or not.
-	 * @description Essentialy checks status
-	 * @param {Response} response
-	 * @returns {boolean}
+	 * Verifica la respuesta de la solicitud fallida para determinar si el token se actualiza o no.
+	 * @description Verifica el estado.
+	 * @param Response response
+	 * @returns boolean
 	 */
 	public refreshShouldHappen(response: HttpErrorResponse): boolean {
 		return response.status === 401;
 	}
 
 	/**
-	 * Verify that outgoing request is refresh-token,
-	 * so interceptor won't intercept this request
-	 * @param {string} url
-	 * @returns {boolean}
+	 * Verifica que la solicitud saliente sea refresh-token, por lo que el interceptor no interceptará esta solicitud.
+	 * @param string url
+	 * @returns boolean
 	 */
 	public verifyTokenRequest(url: string): boolean {
 		return url.endsWith(this.API_ENDPOINT_REFRESH);
 	}
 
 	/**
-	 * Submit login request
-	 * @param {Credential} credential
-	 * @returns {Observable<any>}
+	 * Envia solicitud de inicio de sesión.
+	 * @param Credential credential
+	 * @returns Observable<any>
 	 */
 	public login(credential: Credential): Observable<any> {
-		// Expecting response from API
+		// Esperando respuesta de la API
 		// {"id":1,"username":"admin","password":"demo","email":"admin@demo.com","accessToken":"access-token-0.022563452858263444","refreshToken":"access-token-0.9348573301432961","roles":["ADMIN"],"pic":"./assets/images/users/user4.jpg","fullname":"Mark Andre"}
 		return this.http.get<AccessData>(this.API_URL + this.API_ENDPOINT_LOGIN + '?' + this.util.urlParam(credential)).pipe(
 			map((result: any) => {
@@ -115,17 +122,16 @@ export class AuthenticationService implements AuthService {
 	}
 
 	/**
-	 * Handle Http operation that failed.
-	 * Let the app continue.
-	 * @param operation - name of the operation that failed
-	 * @param result - optional value to return as the observable result
+	 * Manejar la operación Http que falló y deja que la aplicación continúe.
+	 * @param operation - nombre de la operación que falló.
+	 * @param result - valor opcional para devolver como observable.
 	 */
 	private handleError<T>(operation = 'operation', result?: any) {
 		return (error: any): Observable<any> => {
 			// TODO: send the error to remote logging infrastructure
 			console.error(error); // log to console instead
 
-			// Let the app keep running by returning an empty result.
+			// DEJE QUE LA APP SIGA FUNCIONANDO RETORNANDO RESULT VACÍO.
 			return from(result);
 		};
 	}
@@ -141,9 +147,9 @@ export class AuthenticationService implements AuthService {
 	}
 
 	/**
-	 * Save access data in the storage
+	 * Guardar los datos de acceso en el almacenamiento.
 	 * @private
-	 * @param {AccessData} data
+	 * @param AccessData data
 	 */
 	private saveAccessData(accessData: AccessData) {
 		if (typeof accessData !== 'undefined') {
@@ -156,12 +162,12 @@ export class AuthenticationService implements AuthService {
 	}
 
 	/**
-	 * Submit registration request
-	 * @param {Credential} credential
-	 * @returns {Observable<any>}
+	 * Enviar solicitud de registro
+	 * @param Credential credential
+	 * @returns Observable<any>
 	 */
 	public register(credential: Credential): Observable<any> {
-		// dummy token creation
+		//CREACION DE TOKEN FICTICIO
 		credential = Object.assign({}, credential, {
 			accessToken: 'access-token-' + Math.random(),
 			refreshToken: 'access-token-' + Math.random(),
@@ -169,18 +175,18 @@ export class AuthenticationService implements AuthService {
 		});
 		return this.http.post(this.API_URL + this.API_ENDPOINT_REGISTER, credential)
 			.pipe(catchError(this.handleError('register', []))
-		);
+			);
 	}
 
 	/**
-	 * Submit forgot password request
-	 * @param {Credential} credential
-	 * @returns {Observable<any>}
+	 * Solicitar contraseña olvidada.
+	 * @param Credential credential
+	 * @returns Observable<any>
 	 */
 	public requestPassword(credential: Credential): Observable<any> {
 		return this.http.get(this.API_URL + this.API_ENDPOINT_LOGIN + '?' + this.util.urlParam(credential))
 			.pipe(catchError(this.handleError('forgot-password', []))
-		);
+			);
 	}
 
 }
